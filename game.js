@@ -11,7 +11,7 @@ function setup() {
   rectangle.friction = 0;
   rectangle.drag = 0;
   platform_1 = new Sprite(500, 750, 1000, 300, 'k');
-  platform_1.colour = 'black'
+  platform_1.colour = 'black';
 }
 
 document.addEventListener("keydown", 
