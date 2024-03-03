@@ -18,7 +18,7 @@ function setup() {
     
   cnv = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
   
-  world.gravity.y = 40;
+  world.gravity.y = 100;
   
   obstacles = new Group();
   
@@ -28,16 +28,16 @@ function setup() {
   platform_1 = new Sprite(500, 750, 1000, 300, 's');
   platform_1.colour = 'black';
   
-}
 
 document.addEventListener("keydown", 
     function(event) {
             if(rectangle.y > 558 ){
             console.log("Key pressed!");
-            rectangle.vel.y = -18;
+            rectangle.vel.y = -32;
     }
 });
-
+      rectangle.collides(obstacles, youDead);
+}
 /*******************************************************/
 // draw()
 /*******************************************************/
@@ -45,7 +45,7 @@ function draw() {
   background('pink');
   if(frameCount> nextSpawn){
   newObstacle();
-    nextSpawn = frameCount + random(30,100);
+    nextSpawn = frameCount + random(50,100);
 
   }
 }
@@ -61,4 +61,13 @@ obstacle = new Sprite(1000, RECTANGLE_Y , OBSTACLE_WIDTH, OBSTACLE_HEIGHT, 'k');
 
 function youDead(_rectangle, _obstacle){
     console.log("YouDied")
+}
+
+function startScreen(){
+}
+
+function gameScreen(){
+}
+
+function endScreen(){
 }
