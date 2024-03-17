@@ -7,16 +7,15 @@ console.log("%c t01_create_sprite", "color: blue;");
 
 const SCREEN_WIDTH = 600;
 const SCREEN_HEIGHT = 800;
-const PLAYER_HEIGHT = 25;
-const PLAYER_WIDTH = 25;
+const PLAYER_RADIUS = 40;
 
 
-const OBSTACLE_HEIGHT = PLAYER_HEIGHT;
-const OBSTACLE_WIDTH = PLAYER_WIDTH;
+const OBSTACLE_WIDTH = SCREEN_WIDTH/5.5;
+var OBSTACLE_HEIGHT
 
 var spawnDist = 0;
 var nextSpawn = 0;
-var score = -1;
+var score = 0;
 var player;
   
 var screenSelector = "start";  
@@ -30,13 +29,12 @@ function setup() {
     
     cnv= new Canvas(800, 600);
     
-        cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+    cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
     obstacles = new Group();
+    topfloor =  new Sprite(SCREEN_WIDTH/2, -300, SCREEN_WIDTH, 4, 's');
+    topfloor.color = color("black");
 
-    floor =  new Sprite(SCREEN_WIDTH/2,  SCREEN_HEIGHT, SCREEN_WIDTH, 4, 's');
-    floor.color = color("black");
-    world.gravity.y = 80;
-    
+    world.gravity.y = 40;
     document.addEventListener("keydown", 
         function(event) {
             if(screenSelector == "start"||screenSelector == "end"){
@@ -44,7 +42,7 @@ function setup() {
                 resetGame();
             }else{
                 console.log("Key pressed!");
-                player.vel.y = -20;
+                player.vel.y = -13;
             }
     });
 
@@ -67,11 +65,23 @@ function draw() {
 }
 
 function newObstacle(){
-    obstacle = new Sprite((SCREEN_WIDTH -100),  SCREEN_HEIGHT - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT, 'k');
-    obstacle.color = color("yellow");
-    obstacle.vel.x = -10;
+    floor =  new Sprite(SCREEN_WIDTH/2,  SCREEN_HEIGHT, SCREEN_WIDTH, 4, 's');
+    floor.color = color("black");
     
-    obstacles.add(obstacle);
+    var OBSTACLE_HEIGHT = random(100 , 600);
+    obstacle = new Sprite((SCREEN_WIDTH + 100),  SCREEN_HEIGHT - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT, 'k');
+    obstacle.color = color("yellow");
+    obstacle.vel.x = -4;
+    
+    obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 700 - OBSTACLE_HEIGHT, 'k');
+    obstacle2.color = color("yellow");
+    obstacle2.vel.x = -4;
+    
+    obstacle3 = new Sprite((SCREEN_WIDTH + 100),0 + -510, OBSTACLE_WIDTH, 1000, 'k');
+    obstacle3.color = color("yellow");
+    obstacle3.vel.x = -4;
+    
+    obstacles.add(obstacle, obstacle2, obstacle3, floor);
 }
 
 function youDead(_player, _obstacle){
@@ -84,7 +94,7 @@ function youDead(_player, _obstacle){
 
 function startScreen(){
     background("white");
-
+    
     allSprites.visible = false;
     textSize(32);
     fill(255);
@@ -101,7 +111,7 @@ function gameScreen(){
     if(frameCount> nextSpawn){
         score++;
         newObstacle();
-        nextSpawn = frameCount + random(10,100);
+        nextSpawn = frameCount + (SCREEN_WIDTH/5);
     }
     textSize(32);
     fill(255);
@@ -126,7 +136,7 @@ function endScreen(){
 }
 
 function resetGame(){
-    player = new Sprite(PLAYER_WIDTH*1.2,  SCREEN_HEIGHT/2, PLAYER_WIDTH, PLAYER_HEIGHT, 'd');
+    player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, 'd');
     player.color = color("purple");
     player.collides(obstacles, youDead);
     score = 0;
