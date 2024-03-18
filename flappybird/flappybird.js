@@ -1,7 +1,7 @@
 /*******************************************************/
-// P5.play: t01_create_sprite
-// Create a sprite
-// Written by ??? 
+// 12COMP Programming Project 2024 AS91826v1 2.7v1
+// Flappybird
+// Written by Tristan WOng
 /*******************************************************/
 console.log("%c t01_create_sprite", "color: blue;");
 
@@ -22,19 +22,19 @@ var screenSelector = "start";
 
 var obstacles;
 /*******************************************************/
-// setup()
+// setup and create player and ceiling
 /*******************************************************/
 function setup() {
     console.log("setup: ");
-    
     cnv= new Canvas(800, 600);
-    
     cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
     obstacles = new Group();
+    
     topfloor =  new Sprite(SCREEN_WIDTH/2, -300, SCREEN_WIDTH, 4, 's');
     topfloor.color = color("black");
 
     world.gravity.y = 40;
+
     document.addEventListener("keydown", 
         function(event) {
             if(screenSelector == "start"||screenSelector == "end"){
@@ -49,7 +49,7 @@ function setup() {
 }
 
 /*******************************************************/
-// draw()
+//select function to start
 /*******************************************************/
 function draw() {
     if(screenSelector=="game"){
@@ -64,6 +64,9 @@ function draw() {
     }
 }
 
+/*******************************************************/
+//create object and detect player touch object
+/******************************************************/
 function newObstacle(){
     floor =  new Sprite(SCREEN_WIDTH/2,  SCREEN_HEIGHT, SCREEN_WIDTH, 4, 's');
     floor.color = color("black");
@@ -83,15 +86,19 @@ function newObstacle(){
     
     obstacles.add(obstacle, obstacle2, obstacle3, floor);
 }
-
-function youDead(_player, _obstacle){
+/*******************************************************/
+//what happen player touch object
+/******************************************************/
+function youDead(_player, _obstacle, _obstacle2, obstacle3, floor){
     screenSelector = "end";
     player.remove();
     obstacles.removeAll();
 }
 
 // Main screen functions
-
+/*******************************************************/
+//starting screen
+/******************************************************/
 function startScreen(){
     background("white");
     
@@ -104,7 +111,9 @@ function startScreen(){
     textSize(24);
     text("Press any key to start", 50, 110);
 }
-
+/*******************************************************/
+//gaming screen
+/******************************************************/
 function gameScreen(){
     background("#52e2ff");
     allSprites.visible = true;
@@ -113,13 +122,15 @@ function gameScreen(){
         newObstacle();
         nextSpawn = frameCount + (SCREEN_WIDTH/5);
     }
-    textSize(32);
+    textSize(42);
     fill(255);
     stroke(0);
     strokeWeight(4);
-    text(score, 50, 50);
+    text(score, 290, 50);
 }
-
+/*******************************************************/
+//end screen
+/******************************************************/
 function endScreen(){
     background("white");
 
@@ -134,7 +145,9 @@ function endScreen(){
     textSize(14);
     text("press any key to restart", 50, 150);
 }
-
+/*******************************************************/
+//player
+/******************************************************/
 function resetGame(){
     player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, 'd');
     player.color = color("purple");
