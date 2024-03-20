@@ -21,11 +21,13 @@ var player;
 var screenSelector = "start";  
 
 var obstacles;
+
 /*******************************************************/
 // setup and create player and ceiling
 /*******************************************************/
 function setup() {
     console.log("setup: ");
+    imgBG   = loadImage('images/sky.jpg');
     cnv= new Canvas(800, 600);
     cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
     obstacles = new Group();
@@ -45,7 +47,6 @@ function setup() {
                 player.vel.y = -13;
             }
     });
-
 }
 
 /*******************************************************/
@@ -86,6 +87,12 @@ function newObstacle(){
     
     obstacles.add(obstacle, obstacle2, obstacle3, floor);
 }
+
+function Floor(){
+    floor =  new Sprite(SCREEN_WIDTH/2,  SCREEN_HEIGHT, SCREEN_WIDTH, 4, 's');
+    floor.color = color("black");
+    obstacles.add(floor);
+}
 /*******************************************************/
 //what happen player touch object
 /******************************************************/
@@ -115,13 +122,14 @@ function startScreen(){
 //gaming screen
 /******************************************************/
 function gameScreen(){
-    background("#52e2ff");
+    background(imgBG);
     allSprites.visible = true;
     if(frameCount> nextSpawn){
         score++;
         newObstacle();
         nextSpawn = frameCount + (SCREEN_WIDTH/5);
     }
+    Floor();
     textSize(42);
     fill(255);
     stroke(0);
@@ -150,7 +158,7 @@ function endScreen(){
 /******************************************************/
 function resetGame(){
     player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, 'd');
-    player.color = color("purple");
+    player.color = color("white");
     player.collides(obstacles, youDead);
     score = 0;
 }
