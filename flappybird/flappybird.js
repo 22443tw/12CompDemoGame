@@ -28,6 +28,7 @@ var obstacles;
 function setup() {
     console.log("setup: ");
     imgBG   = loadImage('images/sky.jpg');
+    imgBR   = loadImage('images/bird.jpg');
     cnv= new Canvas(800, 600);
     cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
     obstacles = new Group();
@@ -45,6 +46,11 @@ function setup() {
             }else{
                 console.log("Key pressed!");
                 player.vel.y = -13;
+                player.rotation = 0.
+                setTimeout(function() {
+                player.rotateTo(90, 3);
+                }, 200);
+
             }
     });
 }
@@ -77,7 +83,7 @@ function newObstacle(){
     obstacle.color = color("yellow");
     obstacle.vel.x = -4;
     
-    obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 700 - OBSTACLE_HEIGHT, 'k');
+    obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 650 - OBSTACLE_HEIGHT, 'k');
     obstacle2.color = color("yellow");
     obstacle2.vel.x = -4;
     
@@ -157,10 +163,13 @@ function endScreen(){
 //player
 /******************************************************/
 function resetGame(){
-    player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, 'd');
+    player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, PLAYER_RADIUS, 'd');
     player.color = color("white");
     player.collides(obstacles, youDead);
     score = 0;
+    setTimeout(function() {
+    player.rotateTo(90, 3);
+    }, 200);
 }
 
 /*******************************************************/
