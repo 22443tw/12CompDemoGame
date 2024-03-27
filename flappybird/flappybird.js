@@ -46,10 +46,10 @@ function setup() {
             }else{
                 console.log("Key pressed!");
                 player.vel.y = -13;
-                player.rotation = 0.
+                player.rotateTo(0, 3000);
                 setTimeout(function() {
                 player.rotateTo(90, 3);
-                }, 200);
+                }, 500);
 
             }
     });
@@ -169,7 +169,7 @@ function resetGame(){
     score = 0;
     setTimeout(function() {
     player.rotateTo(90, 3);
-    }, 200);
+    }, 500);
 }
 
 /*******************************************************/
