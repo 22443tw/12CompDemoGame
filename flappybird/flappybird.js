@@ -7,7 +7,7 @@ console.log("%c t01_create_sprite", "color: blue;");
 
 const SCREEN_WIDTH = 600;
 const SCREEN_HEIGHT = 800;
-const PLAYER_RADIUS = 40;
+const PLAYER_RADIUS = 47;
 
 
 const OBSTACLE_WIDTH = SCREEN_WIDTH/5.5;
@@ -21,21 +21,17 @@ var player;
 var screenSelector = "start";  
 
 var obstacles;
-
 /*******************************************************/
 // setup and create player and ceiling
 /*******************************************************/
 function setup() {
     console.log("setup: ");
     imgBG   = loadImage('images/sky.jpg');
-    imgBR   = loadImage('images/bird.jpg');
+    imgBR   = loadImage('images/bird.png');
     cnv= new Canvas(800, 600);
     cnv= new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
     obstacles = new Group();
     
-    topfloor =  new Sprite(SCREEN_WIDTH/2, -300, SCREEN_WIDTH, 4, 's');
-    topfloor.color = color("black");
-
     world.gravity.y = 40;
 
     document.addEventListener("keydown", 
@@ -45,8 +41,9 @@ function setup() {
                 resetGame();
             }else{
                 console.log("Key pressed!");
+                imgBR.resize(60, 60);
                 player.vel.y = -13;
-                player.rotateTo(-30, 30000);
+                player.rotateTo(-10, 9999);
                 setTimeout(function() {
                 player.rotateTo(90, 3);
                 }, 550);
@@ -55,7 +52,7 @@ function setup() {
 }
 
 /*******************************************************/
-//select function to start
+//select function to startx
 /*******************************************************/
 function draw() {
     if(screenSelector=="game"){
@@ -82,11 +79,11 @@ function newObstacle(){
     obstacle.color = color("yellow");
     obstacle.vel.x = -4;
     
-    obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 650 - OBSTACLE_HEIGHT, 'k');
+    obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 620 - OBSTACLE_HEIGHT, 'k');
     obstacle2.color = color("yellow");
     obstacle2.vel.x = -4;
     
-    obstacle3 = new Sprite((SCREEN_WIDTH + 100),0 + -510, OBSTACLE_WIDTH, 1000, 'k');
+    obstacle3 = new Sprite((SCREEN_WIDTH + 100),0 + -2510, OBSTACLE_WIDTH, 5000, 'k');
     obstacle3.color = color("yellow");
     obstacle3.vel.x = -4;
     
@@ -113,7 +110,7 @@ function youDead(_player, _obstacle, _obstacle2, obstacle3, floor){
 /******************************************************/
 function startScreen(){
     background("white");
-    
+    imgBR.resize(60, 60);
     allSprites.visible = false;
     textSize(32);
     fill(255);
@@ -127,12 +124,15 @@ function startScreen(){
 //gaming screen
 /******************************************************/
 function gameScreen(){
+    imgBR.resize(60, 60);
     background(imgBG);
     allSprites.visible = true;
     if(frameCount> nextSpawn){
-        score++;
         newObstacle();
         nextSpawn = frameCount + (SCREEN_WIDTH/5);
+        setTimeout(function() {
+            score++;
+        }, 3000);
     }
     Floor();
     textSize(42);
@@ -146,7 +146,6 @@ function gameScreen(){
 /******************************************************/
 function endScreen(){
     background("white");
-
     allSprites.visible = false;
     textSize(32);
     fill(255);
@@ -154,7 +153,7 @@ function endScreen(){
     strokeWeight(4);
     text("You died! Too bad :-(", 50, 50);
     textSize(24);
-    text("your score was: "+score, 50, 110);
+    text("your score was: "+ score , 50, 110);
     textSize(14);
     text("press any key to restart", 50, 150);
 }
@@ -162,9 +161,10 @@ function endScreen(){
 //player
 /******************************************************/
 function resetGame(){
-    player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, PLAYER_RADIUS, 'd');
-    player.color = color("white");
+    player = new Sprite(PLAYER_RADIUS*1.2,  SCREEN_HEIGHT/2, PLAYER_RADIUS, 'd');
     player.collides(obstacles, youDead);
+    player.addImage(imgBR);
+    imgBR.resize(60, 60);
     score = 0;
     setTimeout(function() {
     player.rotateTo(90, 3);
