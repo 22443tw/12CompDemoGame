@@ -75,15 +75,15 @@ function newObstacle(){
     
     var OBSTACLE_HEIGHT = random(100 , 600);
     obstacle = new Sprite((SCREEN_WIDTH + 100),  SCREEN_HEIGHT - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, OBSTACLE_HEIGHT, 'k');
-    obstacle.color = color("yellow");
+    obstacle.color = color("#5800db");
     obstacle.vel.x = -4;
     
     obstacle2 = new Sprite((SCREEN_WIDTH + 100),0 + 280 - OBSTACLE_HEIGHT/2, OBSTACLE_WIDTH, 620 - OBSTACLE_HEIGHT, 'k');
-    obstacle2.color = color("yellow");
+    obstacle2.color = color("#5800db");
     obstacle2.vel.x = -4;
     
     obstacle3 = new Sprite((SCREEN_WIDTH + 100),0 + -2510, OBSTACLE_WIDTH, 5000, 'k');
-    obstacle3.color = color("yellow");
+    obstacle3.color = color("#5800db");
     obstacle3.vel.x = -4;
     
     obstacles.add(obstacle, obstacle2, obstacle3, floor);
