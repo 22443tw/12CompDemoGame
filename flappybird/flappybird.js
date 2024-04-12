@@ -25,7 +25,6 @@ var obstacles;
 // setup and create player and ceiling
 /*******************************************************/
 function setup() {
-    console.log("setup: ");
     imgBG   = loadImage('images/sky.jpg');
     imgBR   = loadImage('images/bird.png');
     cnv= new Canvas(800, 600);
